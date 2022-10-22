@@ -4,6 +4,8 @@ services:
     build:
       context: .
       dockerfile: docker/Dockerfile
+      args:
+        - USER=${USER:-pi}
+    command: bash
     stdin_open: true
     tty: true
-    command: bash
