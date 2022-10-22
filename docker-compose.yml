@@ -1,0 +1,9 @@
+version: "3"
+services:
+  playground:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    stdin_open: true
+    tty: true
+    command: bash
