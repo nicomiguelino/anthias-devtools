@@ -10,6 +10,10 @@ RUN apt-get -y update && \
 ARG USER
 ENV USER=$USER
 
-RUN useradd -ms "/bin/bash" $USER
+RUN useradd -ms "/bin/bash" $USER && \
+    usermod -aG sudo $USER && \
+    passwd -d $USER
+
 USER $USER
 WORKDIR /home/$USER
+COPY ./install-devtools.sh /home/$USER
