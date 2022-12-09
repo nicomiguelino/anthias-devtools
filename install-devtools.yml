@@ -16,6 +16,7 @@
         state: present
     - name: Configure Neovim
       ansible.builtin.shell: |
+        echo "ncim_cfg_dir: {{  }}"
         mkdir -p {{nvim_cfg_dir}} && cd $_
         curl -sL {{nvim_cfg_url}} > init.vim
 

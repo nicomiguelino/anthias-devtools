@@ -17,3 +17,4 @@ RUN useradd -ms "/bin/bash" $USER && \
 USER $USER
 WORKDIR /home/$USER
 COPY ./install-devtools.sh /home/$USER
+COPY ./install-devtools.yml /home/$USER

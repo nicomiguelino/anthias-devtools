@@ -46,9 +46,13 @@ fi
 # - .zshrc
 # - Global git config (user.name, user.email, core.editor)
 
-sudo -u ${USER} ansible localhost \
-    -m git \
-    -a "repo=$ANSIBLE_PLAYGROUND_REPO dest=/home/${USER}/ansible-playground version=main force=no"
-cd /home/${USER}/ansible-playground
-sudo -E -u ${USER} ansible-playbook install-devtools.yml
+# TODO: Uncomment for production.
+# sudo -u ${USER} ansible localhost \
+#     -m git \
+#     -a "repo=$ANSIBLE_PLAYGROUND_REPO dest=/home/${USER}/ansible-playground version=main force=no"
+# cd /home/${USER}/ansible-playground
+# sudo -E -u ${USER} ansible-playbook install-devtools.yml
+
+# TODO: Remove after development.
+sudo -E -u ${USER} ansible-playbook $HOME/install-devtools.yml
 
