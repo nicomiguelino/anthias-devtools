@@ -41,6 +41,14 @@ fi
 # TODO: Remove call below if not needed.
 # setup_devtools
 
+# TODO: Modify the following.
+# - .tmux.conf.local
+# - .zshrc
+# - Global git config (user.name, user.email, core.editor)
+
 sudo -u ${USER} ansible localhost \
     -m git \
     -a "repo=$ANSIBLE_PLAYGROUND_REPO dest=/home/${USER}/ansible-playground version=main force=no"
+cd /home/${USER}/ansible-playground
+sudo -E -u ${USER} ansible-playbook install-devtools.yml
+
