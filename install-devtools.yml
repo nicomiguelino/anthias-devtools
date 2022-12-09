@@ -1,0 +1,10 @@
+- hosts: 127.0.0.1
+  tasks:
+    - name: Install development dependencies
+      ansible.builtin.apt:
+        name:
+          - neovim
+          - tmux
+          - ripgrep
+          - zsh
+          - tree

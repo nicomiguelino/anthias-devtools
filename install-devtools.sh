@@ -1,8 +1,9 @@
-#!/usr/bin/env bash -e
+#!/bin/bash -e
 
 ANSIBLE_VERSION="ansible-core==2.12"
 NVIM_CFG_URL='https://raw.githubusercontent.com/nicomiguelino/dotfiles/main/init.vim'
 NVIM_CFG_DIR="${HOME}/.config/nvim"
+ANSIBLE_PLAYGROUND_REPO='https://github.com/nicomiguelino/ansible-playground.git'
 
 setup_devtools () {
     sudo apt-get install -y --no-install-recommends \
@@ -28,6 +29,7 @@ setup_devtools () {
 if ! [ "$(which ansible)"  ]; then
     sudo apt update -y && \
     sudo apt-get install -y --no-install-recommends \
+        git \
         python3 \
         python3-dev \
         python3-pip
@@ -36,4 +38,9 @@ if ! [ "$(which ansible)"  ]; then
     sudo pip install "$ANSIBLE_VERSION"
 fi
 
-setup_devtools
+# TODO: Remove call below if not needed.
+# setup_devtools
+
+sudo -u ${USER} ansible localhost \
+    -m git \
+    -a "repo=$ANSIBLE_PLAYGROUND_REPO dest=/home/${USER}/ansible-playground version=main force=no"
