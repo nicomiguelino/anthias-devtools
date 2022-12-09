@@ -7,6 +7,9 @@ RUN apt-get -y update && \
         python3-pip && \
     apt-get clean
 
+RUN pip install "cryptography==38.0.2"
+RUN pip install "ansible-core==2.12"
+
 ARG USER
 ENV USER=$USER
 
