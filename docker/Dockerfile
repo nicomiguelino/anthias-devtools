@@ -13,9 +13,10 @@ RUN pip install "ansible-core==2.12"
 ARG USER
 ENV USER=$USER
 
-RUN useradd -ms "/bin/bash" $USER && \
-    usermod -aG sudo $USER && \
-    passwd -d $USER
+RUN echo 'pi ALL=(ALL) NOPASSWD:ALL' > /etc/sudoers.d/pi-nopasswd && \
+    chmod 0440 /etc/sudoers.d/pi-nopasswd
+
+RUN useradd -ms "/bin/bash" $USER
 
 USER $USER
 WORKDIR /home/$USER

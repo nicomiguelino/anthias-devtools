@@ -54,5 +54,5 @@ fi
 # sudo -E -u ${USER} ansible-playbook install-devtools.yml
 
 # TODO: Remove after development.
-sudo -E -u ${USER} ansible-playbook $HOME/install-devtools.yml
+ansible-playbook $HOME/install-devtools.yml
 
