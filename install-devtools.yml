@@ -2,24 +2,27 @@
   vars:
     nvim_cfg_url: "https://raw.githubusercontent.com/nicomiguelino/dotfiles/main/init.vim"
     nvim_cfg_dir: "{{ lookup('env', 'HOME') }}/.config/nvim"
-  become: yes
+    vim_plug_default_dir: "{{ lookup('env', 'HOME') }}/.local/share"
   tasks:
     - name: Install development dependencies
+      become: yes
       ansible.builtin.apt:
         update_cache: yes
         name:
+          - fzf
+          - git
           - neovim
-          - tmux
           - ripgrep
-          - zsh
+          - tmux
           - tree
+          - zsh
         state: present
+      register: aptout
     - name: Configure Neovim
       ansible.builtin.shell: |
-        echo "nvim_cfg_dir: {{ nvim_cfg_dir }}"
-        mkdir -p {{nvim_cfg_dir}} && cd $_
-        curl -sL {{nvim_cfg_url}} > init.vim
-        curl -sfLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs \
+        mkdir -p {{ nvim_cfg_dir }} && cd $_
+        curl -sL {{ nvim_cfg_url }} > init.vim
+        curl -sfLo {{ vim_plug_default_dir }}/nvim/site/autoload/plug.vim --create-dirs \
           https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
         nvim --headless +PlugInstall +qall
       args:
