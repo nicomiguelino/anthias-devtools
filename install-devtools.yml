@@ -5,6 +5,9 @@
     vim_plug_url: "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
     vim_plug_default_dir: "{{ lookup('env', 'HOME') }}/.local/share"
     oh_my_zsh_url: "https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh"
+    git_username: "nicomiguelino"
+    git_email: "nicomiguelino2014@gmail.com"
+    git_editor: "nvim"
   tasks:
     - name: Install development dependencies
       become: yes
@@ -20,6 +23,13 @@
           - zsh
         state: present
       register: aptout
+    - name: Configure Git
+      ansible.builtin.shell: |
+        git config --global user.name "{{ git_username }}"
+        git config --global user.email "{{ git_email }}"
+        git config --global core.editor "{{ git_editor }}"
+      args:
+        executable: /bin/bash
     - name: Configure Neovim
       ansible.builtin.shell: |
         curl -sfLo {{ nvim_cfg_dir }}/init.vim --create-dirs {{ nvim_cfg_url }}
@@ -68,3 +78,24 @@
                 export DEVICE_TYPE="pi1"
             fi
           fi
+    - name: Install Oh My Tmux!
+      ansible.builtin.shell: |
+        cd
+        git clone https://github.com/gpakosz/.tmux.git
+        ln -s -f .tmux/.tmux.conf
+        cp .tmux/.tmux.conf.local .
+      args:
+        executable: /bin/bash
+    - name: Configure Oh My Tmux!
+      ansible.builtin.blockinfile:
+        path: "{{ lookup('env', 'HOME') }}/.tmux.conf.local"
+        block: |
+          # Set default prefix back to C-b.
+          set -g prefix2 C-b
+          bind C-b send-prefix -2
+
+          # Enable the Powerline look.
+          tmux_conf_theme_left_separator_main='\uE0B0'
+          tmux_conf_theme_left_separator_sub='\uE0B1'
+          tmux_conf_theme_right_separator_main='\uE0B2'
+          tmux_conf_theme_right_separator_sub='\uE0B3'
