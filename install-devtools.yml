@@ -4,6 +4,7 @@
     nvim_cfg_dir: "{{ lookup('env', 'HOME') }}/.config/nvim"
     vim_plug_url: "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
     vim_plug_default_dir: "{{ lookup('env', 'HOME') }}/.local/share"
+    oh_my_zsh_url: "https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh"
   tasks:
     - name: Install development dependencies
       become: yes
@@ -26,3 +27,44 @@
         nvim --headless +PlugInstall +qall
       args:
         executable: /bin/bash
+    - name: Install Oh My Zsh
+      ansible.builtin.shell: |
+        # TODO: Make Zsh as the default shell.
+        sh -c "$(curl -fsSL {{ oh_my_zsh_url }})" "" --unattended
+      args:
+        executable: /bin/bash
+    - name: Configure Zsh
+      ansible.builtin.blockinfile:
+        path: "{{ lookup('env', 'HOME') }}/.zshrc"
+        block: |
+          # Starting directory
+          if [ -d ${HOME}/screenly ]; then
+            cd ${HOME}/screenly
+          fi
+
+          # Aliases
+          alias docker-compose='docker compose \
+            -f docker-compose.yml \
+            -f docker-compose.override.yml'
+
+          # Export various environment variables
+          export MY_IP=$(ip -4 route get 8.8.8.8 | awk {'print $7'} | tr -d '\n')
+          TOTAL_MEMORY_KB=$(grep MemTotal /proc/meminfo | awk {'print $2'})
+          export VIEWER_MEMORY_LIMIT_KB=$(echo "$TOTAL_MEMORY_KB" \* 0.7 | bc)
+
+          # Hard code this to latest for now.
+          export DOCKER_TAG="latest"
+
+          # Detect Raspberry Pi version
+          if [ -f /proc/device-tree/model ]; then
+            if grep -qF "Raspberry Pi 4" /proc/device-tree/model; then
+                export DEVICE_TYPE="pi4"
+            elif grep -qF "Raspberry Pi 3" /proc/device-tree/model; then
+                export DEVICE_TYPE="pi3"
+            elif grep -qF "Raspberry Pi 2" /proc/device-tree/model; then
+                export DEVICE_TYPE="pi2"
+            else
+                # If all else fail, assume pi1
+                export DEVICE_TYPE="pi1"
+            fi
+          fi
