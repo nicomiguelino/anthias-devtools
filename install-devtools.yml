@@ -39,10 +39,13 @@
         executable: /bin/bash
     - name: Install Oh My Zsh
       ansible.builtin.shell: |
-        # TODO: Make Zsh as the default shell.
         sh -c "$(curl -fsSL {{ oh_my_zsh_url }})" "" --unattended
       args:
         executable: /bin/bash
+    - name: Set Zsh as the default shell
+      ansible.builtin.lineinfile:
+        path: "{{ lookup('env', 'HOME') }}/.bashrc"
+        line: exec /usr/bin/zsh
     - name: Configure Zsh
       ansible.builtin.blockinfile:
         path: "{{ lookup('env', 'HOME') }}/.zshrc"

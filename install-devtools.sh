@@ -23,5 +23,8 @@ fi
 #     -a "repo=$ANSIBLE_PLAYGROUND_REPO dest=/home/${USER}/ansible-playground version=main force=no"
 # cd /home/${USER}/ansible-playground
 
+# TODO: Create separate Docker files for development.
+# TODO: Modify this script so that it can run in both dev and prod environments.
+
 ansible-playbook $HOME/install-devtools.yml
 
