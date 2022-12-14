@@ -17,14 +17,14 @@ if ! [ "$(which ansible)"  ]; then
     sudo pip install "$ANSIBLE_VERSION"
 fi
 
-# TODO: Uncomment for production.
-# sudo -u ${USER} ansible localhost \
-#     -m git \
-#     -a "repo=$ANSIBLE_PLAYGROUND_REPO dest=/home/${USER}/ansible-playground version=main force=no"
-# cd /home/${USER}/ansible-playground
+sudo -u ${USER} ansible localhost \
+    -m git \
+    -a "repo=$ANSIBLE_PLAYGROUND_REPO dest=/home/${USER}/ansible-playground version=main force=no"
+cd /home/${USER}/ansible-playground
+ansible-playbook install-devtools.yml
 
 # TODO: Create separate Docker files for development.
 # TODO: Modify this script so that it can run in both dev and prod environments.
 
-ansible-playbook $HOME/install-devtools.yml
+# ansible-playbook $HOME/install-devtools.yml
 
