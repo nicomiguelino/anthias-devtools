@@ -20,5 +20,6 @@ bash <(curl -sL https://raw.githubusercontent.com/nicomiguelino/ansible-playgrou
 Make sure that you have Ansible installed before running the following command:
 
 ```bash
-curl -sL https://raw.githubusercontent.com/nicomiguelino/ansible-playground/main/install-devtools.yml | ansible-playbook
+curl -sL https://raw.githubusercontent.com/nicomiguelino/ansible-playground/main/install-devtools.yml > /tmp/install-devtools.yml
+ansible-playbook install-devtools.yml
 ```
