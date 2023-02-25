@@ -48,6 +48,7 @@
         buildx_dl_url="$prefix/{{ buildx_version }}/$binary"
 
         wget -O ~/.docker/cli-plugins/docker-buildx $buildx_dl_url
+        chmod +x ~/.docker/cli-plugins/docker-buildx
     - name: Install Oh My Zsh
       ansible.builtin.shell: |
         sh -c "$(curl -fsSL {{ oh_my_zsh_url }})" "" --unattended
