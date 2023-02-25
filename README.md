@@ -12,7 +12,7 @@ your Raspberry Pi:
 ### Option 1 &ndash; Using the Bash script
 
 ```bash
-bash <(curl -sL https://raw.githubusercontent.com/nicomiguelino/ansible-playground/main/install-devtools.sh)
+bash <(curl -sL https://raw.githubusercontent.com/nicomiguelino/anthias-devtools/main/install-devtools.sh)
 ```
 
 ### Option 2 &ndash; Using the Ansible Playbook YML file
@@ -20,7 +20,7 @@ bash <(curl -sL https://raw.githubusercontent.com/nicomiguelino/ansible-playgrou
 Make sure that you have Ansible installed before running the following command:
 
 ```bash
-curl -sL https://raw.githubusercontent.com/nicomiguelino/ansible-playground/main/install-devtools.yml > /tmp/install-devtools.yml
+curl -sL https://raw.githubusercontent.com/nicomiguelino/anthias-devtools/main/install-devtools.yml > /tmp/install-devtools.yml
 ansible-playbook /tmp/install-devtools.yml
 ```
 
