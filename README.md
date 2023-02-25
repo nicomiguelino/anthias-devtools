@@ -1,10 +1,10 @@
-# Ansible Playground
+# Anthias Devtools
 
-This repository serves as a platform for getting started and
-experimenting with Ansible.
+This repository contains a collection of development tools that can be used together with
+[Anthias][1] for open-source development.
 
 
-## Developer Tools
+## Developer Tools for Raspberry Pi Devices
 
 There are two ways that you can install the developer tools on
 your Raspberry Pi:
@@ -23,3 +23,6 @@ Make sure that you have Ansible installed before running the following command:
 curl -sL https://raw.githubusercontent.com/nicomiguelino/ansible-playground/main/install-devtools.yml > /tmp/install-devtools.yml
 ansible-playbook /tmp/install-devtools.yml
 ```
+
+
+[1]: https://github.com/Screenly/Anthias
