@@ -13,12 +13,10 @@ RUN pip install "ansible-core==2.12"
 ARG USER
 ENV USER=$USER
 
-RUN echo 'pi ALL=(ALL) NOPASSWD:ALL' > /etc/sudoers.d/pi-nopasswd && \
-    chmod 0440 /etc/sudoers.d/pi-nopasswd
+RUN echo "$USER ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/$USER-nopasswd && \
+    chmod 0440 /etc/sudoers.d/$USER-nopasswd
 
 RUN useradd -ms "/bin/bash" $USER
 
 USER $USER
 WORKDIR /home/$USER
-COPY ./install-devtools.sh /home/$USER
-COPY ./install-devtools.yml /home/$USER
