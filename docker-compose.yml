@@ -12,3 +12,4 @@ services:
     volumes:
       - ./install-devtools.sh:/home/$USER/install-devtools.sh
       - ./install-devtools.yml:/home/$USER/install-devtools.yml
+      - ./templates:/home/$USER/templates

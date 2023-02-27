@@ -61,3 +61,5 @@ elif [[ "$MODE" == "prod" ]]; then
     cd /home/${USER}/ansible-playground
     ansible-playbook install-devtools.yml
 fi
+
+exec $(which zsh)

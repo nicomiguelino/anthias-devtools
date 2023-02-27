@@ -6,23 +6,25 @@ This repository contains a collection of development tools that can be used toge
 
 ## Developer Tools for Raspberry Pi Devices
 
-There are two ways that you can install the developer tools on
-your Raspberry Pi:
-
-### Option 1 &ndash; Using the Bash script
+### Installation
 
 ```bash
 bash <(curl -sL https://raw.githubusercontent.com/nicomiguelino/anthias-devtools/main/install-devtools.sh)
 ```
 
-### Option 2 &ndash; Using the Ansible Playbook YML file
-
-Make sure that you have Ansible installed before running the following command:
+### Dockerized Development Environment
 
 ```bash
-curl -sL https://raw.githubusercontent.com/nicomiguelino/anthias-devtools/main/install-devtools.yml > /tmp/install-devtools.yml
-ansible-playbook /tmp/install-devtools.yml
+docker compose build && \
+docker compose up -d && \
+docker compose exec playground bash
 ```
+
+```bash
+# Run the following inside the `playground` container.
+./install-devtools.sh --mode=dev
+```
+
 
 
 [1]: https://github.com/Screenly/Anthias

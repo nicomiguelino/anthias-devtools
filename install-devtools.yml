@@ -15,14 +15,15 @@
       ansible.builtin.apt:
         update_cache: yes
         name:
+          - bc
           - fzf
           - git
           - neovim
           - ripgrep
           - tmux
           - tree
-          - zsh
           - wget
+          - zsh
         state: present
       register: aptout
     - name: Configure Git
@@ -65,42 +66,19 @@
     - name: Set Zsh as the default shell
       ansible.builtin.shell: |
         chsh -s /usr/bin/zsh
+    - name: Create a directory for additional Zsh configs
+      ansible.builtin.file:
+        path: "{{ lookup('env', 'HOME') }}/.zshrc.d"
+        state: directory
+    - name: Create a Zsh script for additional configs
+      ansible.builtin.template:
+        src: templates/zshrc.d/anthias.zsh.j2
+        dest: "{{ lookup('env', 'HOME') }}/.zshrc.d/anthias.zsh"
     - name: Configure Zsh
       ansible.builtin.blockinfile:
         path: "{{ lookup('env', 'HOME') }}/.zshrc"
         block: |
-          # Starting directory
-          if [ -d ${HOME}/screenly ]; then
-            cd ${HOME}/screenly
-          fi
-
-          # Aliases
-          alias docker-compose='docker compose \
-            -f docker-compose.yml \
-            -f docker-compose.override.yml'
-
-          # Export various environment variables
-          export MY_IP=$(ip -4 route get 8.8.8.8 | awk {'print $7'} | tr -d '\n')
-          TOTAL_MEMORY_KB=$(grep MemTotal /proc/meminfo | awk {'print $2'})
-          export VIEWER_MEMORY_LIMIT_KB=$(echo "$TOTAL_MEMORY_KB" \* 0.7 | bc)
-
-          # Hard code this to latest for now.
-          export DOCKER_TAG="latest"
-          export DOCKER_TAG="$(git rev-parse --short HEAD)"
-
-          # Detect Raspberry Pi version
-          if [ -f /proc/device-tree/model ]; then
-            if grep -qF "Raspberry Pi 4" /proc/device-tree/model; then
-                export DEVICE_TYPE="pi4"
-            elif grep -qF "Raspberry Pi 3" /proc/device-tree/model; then
-                export DEVICE_TYPE="pi3"
-            elif grep -qF "Raspberry Pi 2" /proc/device-tree/model; then
-                export DEVICE_TYPE="pi2"
-            else
-                # If all else fail, assume pi1
-                export DEVICE_TYPE="pi1"
-            fi
-          fi
+          source ~/.zshrc.d/anthias.zsh
     - name: Install Oh My Tmux!
       ansible.builtin.shell: |
         cd
@@ -110,6 +88,8 @@
       args:
         executable: /bin/bash
     - name: Configure Oh My Tmux!
+      # TODO: Make use of templates for this one.
+      # https://garthkerr.com/using-ansible-template-for-partial-file-block/
       ansible.builtin.blockinfile:
         path: "{{ lookup('env', 'HOME') }}/.tmux.conf.local"
         block: |
