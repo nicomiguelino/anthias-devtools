@@ -54,10 +54,17 @@
         sh -c "$(curl -fsSL {{ oh_my_zsh_url }})" "" --unattended
       args:
         executable: /bin/bash
+    - name: Resolve PAM auth failure in chsh
+      become: yes
+      ansible.builtin.shell: |
+        before='\(auth\s\+\)required\(\s\+pam_shells.so\)'
+        after='\1sufficient\2'
+        sudo sed -i "s/$before/$after/g" /etc/pam.d/chsh
+      args:
+        executable: /bin/bash
     - name: Set Zsh as the default shell
-      ansible.builtin.lineinfile:
-        path: "{{ lookup('env', 'HOME') }}/.bashrc"
-        line: exec /usr/bin/zsh
+      ansible.builtin.shell: |
+        chsh -s /usr/bin/zsh
     - name: Configure Zsh
       ansible.builtin.blockinfile:
         path: "{{ lookup('env', 'HOME') }}/.zshrc"
