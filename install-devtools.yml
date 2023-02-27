@@ -18,6 +18,7 @@
           - bc
           - fzf
           - git
+          - jq
           - neovim
           - ripgrep
           - tmux
