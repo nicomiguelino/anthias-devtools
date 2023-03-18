@@ -1,9 +1,5 @@
 - hosts: 127.0.0.1
   vars:
-    nvim_cfg_url: "https://raw.githubusercontent.com/nicomiguelino/dotfiles/main/init.vim"
-    nvim_cfg_dir: "{{ lookup('env', 'HOME') }}/.config/nvim"
-    vim_plug_url: "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
-    vim_plug_default_dir: "{{ lookup('env', 'HOME') }}/.local/share"
     oh_my_zsh_url: "https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh"
     git_username: "nicomiguelino"
     git_email: "nicomiguelino2014@gmail.com"
@@ -19,8 +15,8 @@
           - fzf
           - git
           - jq
-          - neovim
           - ripgrep
+          - snapd
           - tmux
           - tree
           - wget
@@ -34,11 +30,18 @@
         git config --global core.editor "{{ git_editor }}"
       args:
         executable: /bin/bash
+    - name: Install core snap
+      become: yes
+      ansible.builtin.shell: |
+        sudo snap install core
+    - name: Install Neovim and Node from Snap
+      ansible.builtin.shell: |
+        sudo snap install node --classic
+        sudo snap install nvim --classic
     - name: Configure Neovim
       ansible.builtin.shell: |
-        curl -sfLo {{ nvim_cfg_dir }}/init.vim --create-dirs {{ nvim_cfg_url }}
-        curl -sfLo {{ vim_plug_default_dir }}/nvim/site/autoload/plug.vim --create-dirs {{ vim_plug_url }}
-        nvim --headless +PlugInstall +qall
+        rm -rf ~/.config/nvim
+        git clone https://github.com/nicomiguelino/nvim.git ~/.config/nvim
       args:
         executable: /bin/bash
     - name: Install Docker Buildx
