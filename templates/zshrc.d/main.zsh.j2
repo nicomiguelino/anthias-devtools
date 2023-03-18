@@ -1,0 +1,15 @@
+# vim: ft=zsh
+
+function reset_docker_tag() {
+    export DOCKER_TAG="$(git rev-parse --short HEAD)"
+}
+
+export PATH=$PATH:/snap/bin
+
+GITHUB_DIR=$HOME/code/github
+
+if [[ ! -d $GITHUB_DIR ]]; then
+    mkdir -p $GITHUB_DIR
+fi
+
+alias cd_gh="cd $GITHUB_DIR"

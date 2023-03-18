@@ -76,13 +76,13 @@
         state: directory
     - name: Create a Zsh script for additional configs
       ansible.builtin.template:
-        src: templates/zshrc.d/anthias.zsh.j2
-        dest: "{{ lookup('env', 'HOME') }}/.zshrc.d/anthias.zsh"
+        src: templates/zshrc.d/main.zsh.j2
+        dest: "{{ lookup('env', 'HOME') }}/.zshrc.d/main.zsh"
     - name: Configure Zsh
       ansible.builtin.blockinfile:
         path: "{{ lookup('env', 'HOME') }}/.zshrc"
         block: |
-          source ~/.zshrc.d/anthias.zsh
+          source ~/.zshrc.d/main.zsh
     - name: Install Oh My Tmux!
       ansible.builtin.shell: |
         cd
