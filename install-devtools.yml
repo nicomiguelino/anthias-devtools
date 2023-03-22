@@ -70,6 +70,7 @@
     - name: Set Zsh as the default shell
       ansible.builtin.shell: |
         chsh -s /usr/bin/zsh
+        touch ~/.zshrc
     - name: Create a directory for additional Zsh configs
       ansible.builtin.file:
         path: "{{ lookup('env', 'HOME') }}/.zshrc.d"
