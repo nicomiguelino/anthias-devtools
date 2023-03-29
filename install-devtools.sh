@@ -36,7 +36,7 @@ MODE="prod"
 ANSIBLE_VERSION="ansible-core==2.12"
 NVIM_CFG_URL='https://raw.githubusercontent.com/nicomiguelino/dotfiles/main/init.vim'
 NVIM_CFG_DIR="${HOME}/.config/nvim"
-ANSIBLE_PLAYGROUND_REPO='https://github.com/nicomiguelino/ansible-playground.git'
+ANSIBLE_PLAYGROUND_REPO='https://github.com/nicomiguelino/anthias-devtools.git'
 
 parse_args "$@"
 
@@ -57,8 +57,8 @@ if [[ "$MODE" == "dev" ]]; then
 elif [[ "$MODE" == "prod" ]]; then
     sudo -u ${USER} ansible localhost \
         -m git \
-        -a "repo=$ANSIBLE_PLAYGROUND_REPO dest=/home/${USER}/ansible-playground version=main force=no"
-    cd /home/${USER}/ansible-playground
+        -a "repo=$ANSIBLE_PLAYGROUND_REPO dest=/home/${USER}/anthias-devtools version=main force=no"
+    cd /home/${USER}/anthias-devtools
     ansible-playbook install-devtools.yml
 fi
 
