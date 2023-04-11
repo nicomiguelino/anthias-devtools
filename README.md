@@ -8,6 +8,16 @@ This repository contains a collection of development tools that can be used toge
 
 ### Installation
 
+Install `snapd` first, then do a reboot.
+
+```bash
+sudo apt -y update
+sudo apt -y install snapd
+sudo reboot
+```
+
+After reboot, run the following:
+
 ```bash
 bash <(curl -sL https://raw.githubusercontent.com/nicomiguelino/anthias-devtools/main/install-devtools.sh)
 ```
