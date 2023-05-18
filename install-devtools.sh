@@ -46,7 +46,8 @@ if ! [ "$(which ansible)"  ]; then
         git \
         python3 \
         python3-dev \
-        python3-pip
+        python3-pip \
+        python3-setuptools # Required in Debian Buster.
 
     pip_path=$(which pip)
     pip_command=$([ -f "$pip_path" ] && echo "pip" || echo "pip3")
