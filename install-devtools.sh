@@ -48,8 +48,8 @@ if ! [ "$(which ansible)"  ]; then
         python3-dev \
         python3-pip
 
-    pip_path = $(which pip)
-    pip_command =$([ -f "$pip_path" ] && echo "pip" || echo "pip3")
+    pip_path=$(which pip)
+    pip_command=$([ -f "$pip_path" ] && echo "pip" || echo "pip3")
 
     sudo $pip_command install cryptography==38.0.2
     sudo $pip_command install "$ANSIBLE_VERSION"
