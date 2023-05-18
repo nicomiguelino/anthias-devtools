@@ -51,8 +51,8 @@ if ! [ "$(which ansible)"  ]; then
     pip_path = $(which pip)
     pip_command =$([ -f "$pip_path" ] && echo "pip" || echo "pip3")
 
-    eval "sudo $pip_command install cryptography==38.0.2"
-    eval "sudo $pip_command install \"$ANSIBLE_VERSION\""
+    sudo $pip_command install cryptography==38.0.2
+    sudo $pip_command install "$ANSIBLE_VERSION"
 fi
 
 if [[ "$MODE" == "dev" ]]; then
