@@ -52,8 +52,8 @@ if ! [ "$(which ansible)"  ]; then
     pip_path=$(which pip)
     pip_command=$([ -f "$pip_path" ] && echo "pip" || echo "pip3")
 
-    sudo $pip_command install cryptography==38.0.2
-    sudo $pip_command install "$ANSIBLE_VERSION"
+    sudo $pip_command install cryptography==38.0.2 --break-system-packages
+    sudo $pip_command install "$ANSIBLE_VERSION" --break-system-packages
 fi
 
 if [[ "$MODE" == "dev" ]]; then
